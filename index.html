@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <script src="scripts.js" defer></script>
+  </head>
+  <body>
+    <div id="calculator">
+      <div id="result">0</div>
+
+      <table>
+        <tr>
+          <td>
+            <button class="n" onclick="reset()">
+              <span class="material-symbols-outlined">mop</span>
+            </button>
+          </td>
+          <td>
+            <button class="n" onclick="insert('/')">/</button>
+          </td>
+          <td>
+            <button class="n" onclick="insert('*')">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </td>
+          <td><button class="n" onclick="insert('+')">+</button></td>
+        </tr>
+        <tr>
+          <td><button class="n" onclick="insert('1')">1</button></td>
+          <td><button class="n" onclick="insert('2')">2</button></td>
+          <td><button class="n" onclick="insert('3')">3</button></td>
+          <td><button class="n" onclick="insert('-')">-</button></td>
+        </tr>
+        <tr>
+          <td><button class="n" onclick="insert('4')">4</button></td>
+          <td><button class="n" onclick="insert('5')">5</button></td>
+          <td><button class="n" onclick="insert('6')">6</button></td>
+          <td><button class="n" onclick="insert('%')">%</button></td>
+        </tr>
+        <tr>
+          <td><button class="n" onclick="insert('7')">7</button></td>
+          <td><button class="n" onclick="insert('8')">8</button></td>
+          <td><button class="n" onclick="insert('9')">9</button></td>
+          <td><button class="n" onclick="calcular()">=</button></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button class="n" style="width: 210px" onclick="insert('0')">
+              0
+            </button>
+          </td>
+          <td>
+            <button class="n" onclick="insert('.')">
+              <div class="">.</div>
+            </button>
+          </td>
+          <td>
+            <button class="n" onclick="deleteNumber()">
+              <span class="material-symbols-outlined"> backspace </span>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <script>
+      const visor = document.getElementById("result");
+
+      function insert(num) {
+        //movendo o conteúdo para dentro da função. Isso significa que ela só guarda o valor de quando a página carregou pela primeira vez (vazio ou o que estiver no HTML). Para a calculadora funcionar, você precisa descobrir o que está no visor no momento exato do clique.
+        let conteudo = visor.innerHTML;
+
+        // regra da vírgula
+        if (num === ".") {
+          if (conteudo === "0" || conteudo === "") {
+            visor.innerHTML = "0.";
+            return;
+          }
+          //se o conteúdo já tiver uma vírgula, não pode adicionar outra, com operações mat
+          const partes = conteudo.split(/[\+\-\*\/\%]/);
+          const ultimoNumero = partes[partes.length - 1];
+          if (ultimoNumero.includes(".")) {
+            return;
+          }
+        }
+
+        //Regra para substituir o zero inicial por um número
+        if (conteudo === "0" && num !== ".") {
+          visor.innerHTML = num;
+        } else {
+          conteudo += num;
+          visor.innerHTML = conteudo;
+        }
+        visor.scrollLeft = visor.scrollWidth;
+      }
+      function reset() {
+        visor.innerHTML = "0";
+      }
+
+      function deleteNumber() {
+        visor.innerHTML = visor.innerHTML.slice(0, -1);
+        if (visor.innerHTML === "") {
+          visor.innerHTML = "0";
+        }
+      }
+      function calcular() {
+        let expressao = visor.innerHTML;
+
+        try {
+          // 1. Faz a conta
+          let resultado = eval(expressao);
+
+          // 2. Formata o resultado para não quebrar o layout
+          if (!Number.isInteger(resultado)) {
+            // Se for decimal: limita a 4 casas e remove zeros inúteis no fim
+            visor.innerHTML = parseFloat(resultado.toFixed(4));
+          } else {
+            // Se for inteiro: mostra o número limpo
+            visor.innerHTML = resultado;
+            visor.scrollLeft = visor.scrollWidth;
+          }
+        } catch (erro) {
+          // 3. Se a conta for impossível, avisa ao usuário
+          alert("Expressão inválida!");
+          reset();
+        }
+      }
+    </script>
+  </body>
+</html>
