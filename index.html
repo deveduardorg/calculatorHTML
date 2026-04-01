@@ -14,7 +14,6 @@
     <div id="calculator">
       <h1>GODOI'S CALCULATOR</h1>
       <div id="result">0</div>
-
       <table>
         <tr>
           <td>
@@ -22,9 +21,7 @@
               <span class="material-symbols-outlined">mop</span>
             </button>
           </td>
-          <td>
-            <button class="n" onclick="insert('/')">/</button>
-          </td>
+          <td><button class="n" onclick="insert('/')">/</button></td>
           <td>
             <button class="n" onclick="insert('*')">
               <span class="material-symbols-outlined">close</span>
@@ -42,7 +39,7 @@
           <td><button class="n" onclick="insert('4')">4</button></td>
           <td><button class="n" onclick="insert('5')">5</button></td>
           <td><button class="n" onclick="insert('6')">6</button></td>
-          <td><button class="n" onclick="insert('**')">^</button></td>
+          <td><button class="n" onclick="insert('^')">^</button></td>
         </tr>
         <tr>
           <td><button class="n" onclick="insert('7')">7</button></td>
@@ -52,18 +49,12 @@
         </tr>
         <tr>
           <td colspan="2">
-            <button class="n" style="width: 210px" onclick="insert('0')">
-              0
-            </button>
+            <button class="n" onclick="insert('0')">0</button>
           </td>
-          <td>
-            <button class="n" onclick="insert('.')">
-              <div class="">.</div>
-            </button>
-          </td>
+          <td><button class="n" onclick="insert('.')">.</button></td>
           <td>
             <button class="n" onclick="deleteNumber()">
-              <span class="material-symbols-outlined"> backspace </span>
+              <span class="material-symbols-outlined">backspace</span>
             </button>
           </td>
         </tr>
