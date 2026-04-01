@@ -43,7 +43,7 @@ function calcular() {
   try {
     // 1. Faz a conta
     let expressaoTraduzida = expressao.replace(/\^/g, "**");
-    let resultado = eval(expressao);
+    let resultado = eval(expressaoTraduzida);
 
     // 2. Formata o resultado para não quebrar o layout
     if (!Number.isInteger(resultado)) {
