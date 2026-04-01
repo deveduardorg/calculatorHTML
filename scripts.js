@@ -11,7 +11,7 @@ function insert(num) {
       return;
     }
     //se o conteúdo já tiver uma vírgula, não pode adicionar outra, com operações mat
-    const partes = conteudo.split(/[\+\-\*\/\%]/);
+    const partes = conteudo.split(/[\+\-\*\/\%\^]/);
     const ultimoNumero = partes[partes.length - 1];
     if (ultimoNumero.includes(".")) {
       return;
@@ -42,6 +42,7 @@ function calcular() {
 
   try {
     // 1. Faz a conta
+    let expressaoTraduzida = expressao.replace(/\^/g, "**");
     let resultado = eval(expressao);
 
     // 2. Formata o resultado para não quebrar o layout
@@ -58,4 +59,25 @@ function calcular() {
     alert("Expressão inválida!");
     reset();
   }
+  // faz com que o evento de pressionar uma tecla seja escutado em todo o documento
 }
+document.addEventListener("keydown", (event) => {
+  const tecla = event.key; // captura a tecla pressionada para a variável tecla
+  //verifica se a tecla pressionada é um número ou um operador válido. Se for, chama a função insert para adicionar a tecla ao visor.
+  if (tecla === " " || tecla === "Enter") {
+    event.preventDefault(); // impede a ação padrão do navegador para a barra de espaço e a tecla Enter, que pode causar rolagem ou submissão de formulário
+  }
+
+  if (/[0-9\+\-\*\/\%\^\.]/.test(tecla)) {
+    insert(tecla); // chama a função insert passando a tecla como argumento
+  }
+  if (tecla === "Enter") {
+    calcular();
+  }
+  if (tecla === "Backspace") {
+    deleteNumber();
+  }
+  if (tecla === " ") {
+    reset();
+  }
+});
